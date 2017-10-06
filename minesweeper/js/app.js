@@ -63,40 +63,48 @@ function randomMinePlacement(dimensions) {
 function assignAdjMines() {
   for (var i = 0; i < boardDimensions; i++) {
     for (var j = 0; j < boardDimensions; j++) {
-      if (board[i][j].mine) {board[i][j].adjMines = null;}
-      else {board[i][j].adjMines = checkNeighbours(i, j);}
-    }
+      var currentCell = board[i][j];
+      if (currentCell.mine) {
+        currentCell.adjMines = null;
+      }
+      else {
+        checkNeighbours(i, j).forEach(function(neighbour) {
+          neighbour.mine && (currentCell.adjMines += 1);
+        })
+      }
+    } 
   }
 }
 
 function checkNeighbours(row, col) {
-  var adjacentMines = 0;
+  var neighbours = [];
   for (var i = (row - 1); i < (row + 2); i++) {
     for (var j = (col -1); j < (col + 2); j++) {
       if (i < 0 || j < 0 || i > rowMax || j > colMax) {}
       else if (i === row && j === col) {}
       else {
-        if (board[i][j].mine) {
-          adjacentMines += 1;
-        }
+        var neighbour = board[i][j];
+        neighbours.push(neighbour);
       }
     }
   }
-  return adjacentMines;
+  return neighbours;
 }
 
 function showCell(row, col) {
   var cell = board[row][col]
-  if (cell.mine) {}
-  else {
+  if (cell.mine) {
+    return;
+  } else if (cell.adjMines) {
     cell.shown = true;
+  }
+  else {
     for (var i = (row - 1); i < (row + 2); i++) {
       for (var j = (col -1); j < (col + 2); j++) {
         if (i < 0 || j < 0 || i > rowMax || j > colMax) {}
         else if (i === row && j === col) {}
         else {
-          if (cell.adjMines) {
-            
+          if (board[i][j].adjMines) {
           } else {
             return showCell(i, j);
           }
