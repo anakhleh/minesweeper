@@ -64,6 +64,8 @@ function assignAdjMines() {
   for (var i = 0; i < boardDimensions; i++) {
     for (var j = 0; j < boardDimensions; j++) {
       var currentCell = board[i][j];
+      currentCell.row = i;
+      currentCell.column = j;
       if (currentCell.mine) {
         currentCell.adjMines = null;
       }
@@ -77,12 +79,10 @@ function assignAdjMines() {
 }
 
 function checkNeighbours(row, col) {
-  var neighbours = [];
+  var neighbours = []; 
   for (var i = (row - 1); i < (row + 2); i++) {
-    for (var j = (col -1); j < (col + 2); j++) {
-      if (i < 0 || j < 0 || i > rowMax || j > colMax) {}
-      else if (i === row && j === col) {}
-      else {
+    for (var j = (col - 1); j < (col + 2); j++) {
+      if (i >= 0 && j >= 0 && i <= rowMax && j <= colMax && (i !== row || j !== col)) {
         var neighbour = board[i][j];
         neighbours.push(neighbour);
       }
@@ -91,28 +91,45 @@ function checkNeighbours(row, col) {
   return neighbours;
 }
 
-function showCell(row, col) {
-  var cell = board[row][col]
+function expandShownCells(row, col) {
+  cell = board[row][col];
   if (cell.mine) {
     return;
+  } else if (cell.shown) {
+    return
   } else if (cell.adjMines) {
     cell.shown = true;
-  }
-  else {
-    for (var i = (row - 1); i < (row + 2); i++) {
-      for (var j = (col -1); j < (col + 2); j++) {
-        if (i < 0 || j < 0 || i > rowMax || j > colMax) {}
-        else if (i === row && j === col) {}
-        else {
-          if (board[i][j].adjMines) {
-          } else {
-            return showCell(i, j);
-          }
-        }
-      }
-    }
+    return
+  } else {
+    cell.shown = true;
+    checkNeighbours(row, col).forEach(function(neighbour) {
+      expandShownCells(neighbour.row, neighbour.column);
+    })
   }
 }
+
+// function showCell(row, col) {
+//   var cell = board[row][col]
+//   if (cell.mine) {
+//     return;
+//   } else if (cell.adjMines) {
+//     cell.shown = true;
+//   }
+//   else {
+//     for (var i = (row - 1); i < (row + 2); i++) {
+//       for (var j = (col -1); j < (col + 2); j++) {
+//         if (i < 0 || j < 0 || i > rowMax || j > colMax) {}
+//         else if (i === row && j === col) {}
+//         else {
+//           if (board[i][j].adjMines) {
+//           } else {
+//             return showCell(i, j);
+//           }
+//         }
+//       }
+//     }
+//   }
+// }
 
 function handleClick() {
   var row = parseInt($(this).parent().attr('id'));
@@ -122,7 +139,8 @@ function handleClick() {
     winner = false;
     return;
   } else {
-    showCell(row, column);
+    // showCell(row, column);
+    expandShownCells(row, column);
   }
 
   render();
