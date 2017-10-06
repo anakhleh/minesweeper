@@ -1,0 +1,152 @@
+/*----- constants -----*/
+/*----- app's state (variables) -----*/
+var board;
+var boardDimensions;
+var rowMax;
+var colMax;
+var numMines;
+var winner;
+
+/*----- cached element references -----*/
+var $table = $('table');
+/*----- event listeners -----*/
+$table.on('click', 'td', handleClick);
+/*----- classes -----*/
+class Cell {
+  constructor (mine, adjMines, flagged, shown) {
+    this.mine = mine;
+    this.adjMines = adjMines;
+    this.flagged = flagged;
+    this.shown = shown;
+  }
+}
+/*----- functions -----*/
+// new Cell(false, 0, false, false)
+function init () {
+  board = new Array(9).fill(null);
+  board.forEach(function(elem, idx) {
+    elem = new Array(9).fill(null);
+    elem = elem.map(function() {
+      return new Cell(false, null, false, false);
+    });
+    board[idx] = elem;
+  })
+  boardDimensions = 9;
+  rowMax = 8;
+  colMax = 8;
+  numMines = 10;
+  winner = null;
+  randomMinePlacement(boardDimensions);
+  assignAdjMines();
+
+  render();
+}
+
+function getRandomIntInclusive(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min; 
+}
+
+function randomMinePlacement(dimensions) {
+  for (var i = 0; i < numMines; i++) {
+    var row = getRandomIntInclusive(0, dimensions - 1);
+    var col = getRandomIntInclusive(0, dimensions - 1);
+    if (board[row][col].mine) {
+      i--;
+    } else {
+      board[row][col].mine = true;
+    }
+  }
+}
+
+function assignAdjMines() {
+  for (var i = 0; i < boardDimensions; i++) {
+    for (var j = 0; j < boardDimensions; j++) {
+      if (board[i][j].mine) {board[i][j].adjMines = null;}
+      else {board[i][j].adjMines = checkNeighbours(i, j);}
+    }
+  }
+}
+
+function checkNeighbours(row, col) {
+  var adjacentMines = 0;
+  for (var i = (row - 1); i < (row + 2); i++) {
+    for (var j = (col -1); j < (col + 2); j++) {
+      if (i < 0 || j < 0 || i > rowMax || j > colMax) {}
+      else if (i === row && j === col) {}
+      else {
+        if (board[i][j].mine) {
+          adjacentMines += 1;
+        }
+      }
+    }
+  }
+  return adjacentMines;
+}
+
+function showCell(row, col) {
+  var cell = board[row][col]
+  if (cell.mine) {}
+  else {
+    cell.shown = true;
+    for (var i = (row - 1); i < (row + 2); i++) {
+      for (var j = (col -1); j < (col + 2); j++) {
+        if (i < 0 || j < 0 || i > rowMax || j > colMax) {}
+        else if (i === row && j === col) {}
+        else {
+          if (cell.adjMines) {
+            
+          } else {
+            return showCell(i, j);
+          }
+        }
+      }
+    }
+  }
+}
+
+function handleClick() {
+  var row = parseInt($(this).parent().attr('id'));
+  var column = parseInt($(this).attr('class'));
+  console.log(row, column);
+  if (board[row][column].mine) {
+    winner = false;
+    return;
+  } else {
+    showCell(row, column);
+  }
+
+  render();
+}
+
+function render() {
+  board.forEach(function(tableRow, row) {
+    tableRow.forEach(function(cell, col) {
+      if (cell.shown) {
+          var $currentCell = $(`#${row}`).children(`.${col}`);
+          $currentCell.css('background-color', 'green');
+          $currentCell.html(cell.adjMines);
+      }
+    })
+  })
+}
+init();
+
+// function checkNeighboursOne(row, col) {
+//   for (var i = (row - 1); i < (row + 2); i++) {
+//     for (var j = (col -1); j < (col + 2); j++) {
+//       console.log('in nested loops')
+//       if (i < 0 || j < 0 || i > rowMax || j > colMax) {}
+//       else if (i === row && j === col) {}
+//       else {
+//         console.log('in accepted cell')
+//         if (board[i][j].mine) {
+//           board[row][col].adjMines += 1;
+//         } else {
+//           return checkNeighbours(i, j);
+//         }
+//       }
+//     }
+//   }
+// }

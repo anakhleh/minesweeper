@@ -1,0 +1,25 @@
+/* .main-section {
+  border: solid 2px black;
+} */
+
+header {
+  text-align: center;
+}
+
+.game-screen {
+  height: 400px;
+}
+
+table {
+  border-collapse: collapse;
+  text-align: center;
+  vertical-align: middle;
+  margin: 30px auto;
+}
+
+td {
+  cursor: pointer;
+  border: solid 2px black;
+  height: 20px;
+  width: 20px;
+}
