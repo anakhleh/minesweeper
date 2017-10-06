@@ -108,29 +108,6 @@ function expandShownCells(row, col) {
   }
 }
 
-// function showCell(row, col) {
-//   var cell = board[row][col]
-//   if (cell.mine) {
-//     return;
-//   } else if (cell.adjMines) {
-//     cell.shown = true;
-//   }
-//   else {
-//     for (var i = (row - 1); i < (row + 2); i++) {
-//       for (var j = (col -1); j < (col + 2); j++) {
-//         if (i < 0 || j < 0 || i > rowMax || j > colMax) {}
-//         else if (i === row && j === col) {}
-//         else {
-//           if (board[i][j].adjMines) {
-//           } else {
-//             return showCell(i, j);
-//           }
-//         }
-//       }
-//     }
-//   }
-// }
-
 function handleClick() {
   var row = parseInt($(this).parent().attr('id'));
   var column = parseInt($(this).attr('class'));
@@ -139,7 +116,6 @@ function handleClick() {
     winner = false;
     return;
   } else {
-    // showCell(row, column);
     expandShownCells(row, column);
   }
 
@@ -158,21 +134,3 @@ function render() {
   })
 }
 init();
-
-// function checkNeighboursOne(row, col) {
-//   for (var i = (row - 1); i < (row + 2); i++) {
-//     for (var j = (col -1); j < (col + 2); j++) {
-//       console.log('in nested loops')
-//       if (i < 0 || j < 0 || i > rowMax || j > colMax) {}
-//       else if (i === row && j === col) {}
-//       else {
-//         console.log('in accepted cell')
-//         if (board[i][j].mine) {
-//           board[row][col].adjMines += 1;
-//         } else {
-//           return checkNeighbours(i, j);
-//         }
-//       }
-//     }
-//   }
-// }
