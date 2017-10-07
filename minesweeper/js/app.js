@@ -2,8 +2,6 @@
 /*----- app's state (variables) -----*/
 var board;
 var boardDimensions;
-var rowMax;
-var colMax;
 var numMines;
 var winner;
 
@@ -32,8 +30,6 @@ function init () {
     board[idx] = elem;
   })
   boardDimensions = 9;
-  rowMax = 8;
-  colMax = 8;
   numMines = 10;
   winner = null;
   randomMinePlacement(boardDimensions);
@@ -82,7 +78,7 @@ function checkNeighbours(row, col) {
   var neighbours = []; 
   for (var i = (row - 1); i < (row + 2); i++) {
     for (var j = (col - 1); j < (col + 2); j++) {
-      if (i >= 0 && j >= 0 && i <= rowMax && j <= colMax && (i !== row || j !== col)) {
+      if (i >= 0 && j >= 0 && i <= (boardDimensions - 1) && j <= (boardDimensions - 1) && (i !== row || j !== col)) {
         var neighbour = board[i][j];
         neighbours.push(neighbour);
       }
