@@ -4,6 +4,7 @@ var board;
 var boardDimensions;
 var numMines;
 var winner;
+var gameOver;
 
 /*----- cached element references -----*/
 var $table = $('table');
@@ -104,17 +105,24 @@ function expandShownCells(row, col) {
   }
 }
 
+function calculateWinner() {
+  board.forEach(function(tableRow) {
+    winner = tableRow.every(function(cell) {
+      return (cell.mine || cell.shown);
+    })
+  })
+}
+
 function handleClick() {
   var row = parseInt($(this).parent().attr('id'));
   var column = parseInt($(this).attr('class'));
-  console.log(row, column);
   if (board[row][column].mine) {
-    winner = false;
+    gameOver = true;
     return;
   } else {
     expandShownCells(row, column);
   }
-
+  calculateWinner();
   render();
 }
 
