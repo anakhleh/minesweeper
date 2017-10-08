@@ -5,6 +5,7 @@ var boardDimensions;
 var numMines;
 var winner;
 var gameOver;
+var explosionCoordinates;
 
 /*----- cached element references -----*/
 var $table = $('table');
@@ -106,35 +107,45 @@ function expandShownCells(row, col) {
 }
 
 function calculateWinner() {
-  board.forEach(function(tableRow) {
-    winner = tableRow.every(function(cell) {
+  winner = board.every(function(tableRow) {
+    return tableRow.every(function(cell) {
       return (cell.mine || cell.shown);
-    })
+    });
   })
 }
 
 function handleClick() {
   var row = parseInt($(this).parent().attr('id'));
   var column = parseInt($(this).attr('class'));
-  if (board[row][column].mine) {
-    gameOver = true;
+  if (winner || gameOver) {
     return;
+  } else if (board[row][column].mine) {
+    explosionCoordinates = [row, column];
+    gameOver = true;
   } else {
     expandShownCells(row, column);
+    calculateWinner();
   }
-  calculateWinner();
+
   render();
 }
 
 function render() {
-  board.forEach(function(tableRow, row) {
-    tableRow.forEach(function(cell, col) {
-      if (cell.shown) {
-          var $currentCell = $(`#${row}`).children(`.${col}`);
-          $currentCell.css('background-color', 'green');
-          $currentCell.html(cell.adjMines);
-      }
+  if (!gameOver) {
+    board.forEach(function(tableRow, row) {
+      tableRow.forEach(function(cell, col) {
+        if (cell.shown) {
+            var $currentCell = $(`#${row}`).children(`.${col}`);
+            $currentCell.css('background-color', 'green');
+            $currentCell.html(cell.adjMines);
+        }
+      })
     })
-  })
+    if (winner) {
+      alert('You won!')
+    }
+  } else {
+    $(`#${explosionCoordinates[0]}`).children(`.${explosionCoordinates[1]}`).css('background-color', 'red').html('X');
+  }
 }
 init();
