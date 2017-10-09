@@ -9,8 +9,37 @@ var explosionCoordinates;
 
 /*----- cached element references -----*/
 var $table = $('table');
+var $navBar = $('nav');
 /*----- event listeners -----*/
+
+// Gameplay listener, handles game events
+
 $table.on('click', 'td', handleClick);
+
+// Button event listeners, serve to handle page navigation signals from user
+
+$navBar.on('click', 'button', handleButtonClick);
+
+function resetGame() {
+  init();
+}
+
+// function handleButtonClick() {
+//   var $button = $(this);
+//   switch($button.html()) {
+//     case 'Play Game':
+//       $button.css('display', 'none');
+//       $button.siblings('.difficulty').css('display', 'inline-block');
+//       break;
+    
+//     case 'Beginner' || 'Intermediate' || 'Expert':
+//       $button.css('display', 'none');
+//       $button.siblings('.difficulty').css('display', 'none');
+//       $button.siblings('.gameplay').css('display', 'inline-block');
+//       boardDimensions = parseInt($button.attr('data-difficulty'));
+//   }
+// }
+
 /*----- classes -----*/
 class Cell {
   constructor (mine, adjMines, flagged, shown) {
