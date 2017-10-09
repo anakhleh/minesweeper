@@ -27,6 +27,7 @@ td {
   height: 20px;
   width: 20px;
   padding: 1px; 
+  /* box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24); */
 }
 
 th:first-child, td:first-child {
@@ -37,10 +38,10 @@ th:last-child, td:last-child {
   padding: 1px; 
 }
 
-nav.difficulty {
+nav.difficulty, nav.gameplay {
   display: none;
 }
 
-nav.gameplay {
+.gameBoard-screen, .difficulty-screen {
   display: none;
 }

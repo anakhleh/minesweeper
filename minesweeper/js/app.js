@@ -928,7 +928,7 @@ var gameOver;
 var explosionCoordinates;
 
 /*----- cached element references -----*/
-var $table = $('.gameBoard');
+var $table = $('.gameBoard-screen');
 var $navBar = $('nav');
 /*----- event listeners -----*/
 
@@ -951,15 +951,17 @@ function handleButtonClick() {
   switch($button.html()) {
     case 'Play Game':
       $button.parent().hide().siblings('.difficulty').show();
+      $('.instructions-screen').hide().siblings('.difficulty-screen').show();
       break;
     
     case 'Beginner':
     case 'Intermediate':
     case 'Expert':
       $button.parent().hide().siblings('.gameplay').show();
+      $('.difficulty-screen').hide().siblings('.gameBoard-screen').show();
       boardDimensions = parseInt($button.attr('data-boardDimension'));
       numMines = parseInt($button.attr('data-numberMines'));
-      $('.gameBoard').html(boards[parseInt($button.attr('data-boardNumber'))]);
+      $('.gameBoard-screen').html(boards[parseInt($button.attr('data-boardNumber'))]);
       init();
       break;
     
@@ -969,10 +971,12 @@ function handleButtonClick() {
 
     case 'Change Difficulty':
       $button.parent().hide().siblings('.difficulty').show();
+      $('.gameBoard-screen').hide().siblings('.difficulty-screen').show();
       break;
 
     case 'Main Menu':
       $button.parent().hide().siblings('.start-screen').show();
+      $('.gameBoard-screen').hide().siblings('.instructions-screen').show();
   }
 }
 
@@ -996,7 +1000,7 @@ function init () {
     });
     board[idx] = elem;
   })
-  
+
   winner = null;
   gameOver = null;
   randomMinePlacement(boardDimensions);
