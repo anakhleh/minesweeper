@@ -935,6 +935,7 @@ var $navBar = $('nav');
 // Gameplay listener, handles game events
 
 $table.on('click', 'td', handleClick);
+$table.on('contextmenu', 'td', handleRightClick);
 
 // Button event listeners, serve to handle page navigation signals from user
 
@@ -995,8 +996,7 @@ function init () {
     });
     board[idx] = elem;
   })
-  // boardDimensions = 9;
-  // numMines = 10;
+  
   winner = null;
   gameOver = null;
   randomMinePlacement(boardDimensions);
@@ -1080,7 +1080,6 @@ function calculateWinner() {
 }
 
 function handleClick() {
-  console.log('clicked')
   var row = parseInt($(this).parent().attr('id'));
   var column = parseInt($(this).attr('class'));
   if (winner || gameOver) {
@@ -1096,17 +1095,30 @@ function handleClick() {
   render();
 }
 
+function handleRightClick() {
+  var row = parseInt($(this).parent().attr('id'));
+  var column = parseInt($(this).attr('class'));
+  if (winner || gameOver) {
+    return;
+  } else if(board[row][column].flagged) {
+    board[row][column].flagged = false;
+  } else {
+    board[row][column].flagged = true;
+  }
+  render();
+}
+
 function render() {
   if (!gameOver) {
     board.forEach(function(tableRow, row) {
       tableRow.forEach(function(cell, col) {
         var $currentCell = $(`#${row}`).children(`.${col}`);
         if (cell.shown) {
-            $currentCell.css('background-color', 'green');
-            $currentCell.html(cell.adjMines);
+          $currentCell.css('background-color', 'green').html(cell.adjMines);
+        } else if(cell.flagged) {
+          $currentCell.css('background-color', 'blue').html('F');
         } else {
-          $currentCell.css('background-color', 'white');
-          $currentCell.html(null);
+          $currentCell.css('background-color', 'white').html(null);
         }
       })
     })
