@@ -18,8 +18,8 @@
 
     <section class='ten columns main-section'>
       <section class='row game-screen'>
-          <div class='twelve columns'>
-            <table>
+          <div class='twelve columns gameBoard'>
+            <!-- <table>
               <tr id='0'>
                 <td class='0'></td>
                 <td class='1'></td>
@@ -119,19 +119,23 @@
                 <td class='7'></td>
                 <td class='8'></td>
               </tr>
-            </table>
+            </table> -->
           </div>
       </section>
-        
-      <nav class='row'>
-        <button class='four columns difficulty' data-difficulty='9'>Beginner</button>
-        <button class='four columns difficulty' data-difficulty='16'>Intermediate</button>
-        <button class='four columns difficulty' data-difficulty='22'>Expert</button>
-        <button class='four columns offset-by-four start-screen'>Play Game</button>
+      
+      <nav class='row start-screen'>
+          <button class='four columns offset-by-four start-screen'>Play Game</button>
+      </nav>
+      <nav class='row difficulty'>
+        <button class='four columns difficulty' data-boardDimension='9' data-numberMines='10' data-boardNumber='0'>Beginner</button>
+        <button class='four columns difficulty' data-boardDimension='16' data-numberMines='40' data-boardNumber='1'>Intermediate</button>
+        <button class='four columns difficulty' data-boardDimension='22' data-numberMines='99' data-boardNumber='2'>Expert</button>
+      </nav>
+      <nav class='row gameplay'>
         <button class='four columns gameplay'>Main Menu</button>
-        <button class='four columns gameplay'>Reset</button>
         <button class='four columns gameplay'>Change Difficulty</button>
-      <av>
+        <button class='four columns gameplay'>Reset</button>
+      </nav>
     </section>
   </main>
   

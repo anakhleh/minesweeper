@@ -28,14 +28,10 @@ td {
   width: 20px;
 }
 
-.difficulty {
+nav.difficulty {
   display: none;
 }
 
-.gameplay {
+nav.gameplay {
   display: none;
-}
-
-.start-screen {
-
 }
