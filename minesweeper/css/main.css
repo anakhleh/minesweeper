@@ -37,11 +37,11 @@ table {
   margin: auto;
 }
 
-.default {
+td {
   text-align: center;
   letter-spacing: 0;
   line-height: 18px;
-  font-size: 15px;
+  font-size: 18px;
   cursor: pointer;
   height: 20px;
   width: 20px;
@@ -49,12 +49,19 @@ table {
   color: black;
   border: solid 1px #BDBDBD;
   background-color: #BDBDBD;
-  box-shadow: inset -2px -2px #7B7B7B, inset 2px 2px white;
+  box-shadow: inset -2px -2px #7B7B7B;
+}
+
+.game-end {
+  cursor: default;
 }
 
 .flagged {
-  background-color: #BF7935;
-  box-shadow: inset -2px -2px #8C5827, inset 2px 2px #FFA147;
+  background-image: url('https://i.imgur.com/Flqlztk.png');
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  background-position: center;
+  background-size: 18px;
 }
 
 .clicked-mine {
@@ -64,13 +71,60 @@ table {
 .mine {
   box-shadow: none;
   cursor: default;
+  background-image: url('https://i.imgur.com/GfhvaKY.png');
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  background-position: center;
+  background-size: 18px;
 }
 
 .shown {
   box-shadow: none;
-  color: Purple;
   cursor: default;
 }
+
+.adjMines-1 {
+  color: #4a1486;
+  background-color: #e0ecf4;
+}
+
+.adjMines-2 {
+  color: #4a1486;
+  background-color: #bfd3e6;
+}
+
+.adjMines-3 {
+  color: #6a51a3;
+  background-color: #9ebcda;
+}
+
+.adjMines-4 {
+  color: #6a51a3;
+  background-color: #8c96c6;
+}
+
+.adjMines-5 {
+  color: #dadaeb;
+  background-color: #8c6bb1;
+}
+
+.adjMines-6 {
+  color: #dadaeb;
+  background-color: #88419d;
+}
+
+.adjMines-7 {
+  color: #efedf5;
+  background-color: #810f7c;
+}
+
+.adjMines-8 {
+  color: #efedf5;
+  background-color: #4d004b;
+}
+
+
+
 
 th:first-child, td:first-child {
   padding: 1px;

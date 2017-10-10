@@ -1,4 +1,14 @@
 /*----- constants -----*/
+var mineHeatMapColors = {
+  1: 'adjMines-1',
+  2: 'adjMines-2',
+  3: 'adjMines-3',
+  4: 'adjMines-4',
+  5: 'adjMines-5',
+  6: 'adjMines-6',
+  7: 'adjMines-7',
+  8: 'adjMines-8',
+}
 
 /*----- app's state (variables) -----*/
 var board;
@@ -94,10 +104,10 @@ function generateGameboard(boardSize) {
   boardHTMLRepresentation = `<table>`;
   for(var i = 0; i < boardSize; i++) {
     boardHTMLRepresentation += `
-      <tr id="${i}">
+      <tr data-rowNum="${i}">
         `;
     for(var j = 0; j <boardSize; j++) {
-      boardHTMLRepresentation += `<td class="${j}"></td>
+      boardHTMLRepresentation += `<td data-columnNum="${j}"></td>
       `;
     }
     boardHTMLRepresentation += `</tr>`;
@@ -182,8 +192,8 @@ function calculateWinner() {
 }
 
 function handleClick() {
-  var row = parseInt($(this).parent().attr('id'));
-  var column = parseInt($(this).attr('class'));
+  var row = parseInt($(this).parent().attr('data-rowNum'));
+  var column = parseInt($(this).attr('data-columnNum'));
   if (winner || gameOver) {
     return;
   } else if (board[row][column].mine) {
@@ -198,8 +208,8 @@ function handleClick() {
 }
 
 function handleRightClick() {
-  var row = parseInt($(this).parent().attr('id'));
-  var column = parseInt($(this).attr('class'));
+  var row = parseInt($(this).parent().attr('data-rowNum'));
+  var column = parseInt($(this).attr('data-columnNum'));
   if (winner || gameOver) {
     return;
   } else if(board[row][column].flagged) {
@@ -214,14 +224,12 @@ function render() {
   if (!gameOver) {
     board.forEach(function(tableRow, row) {
       tableRow.forEach(function(cell, col) {
-        var $currentCell = $(`#${row}`).children(`.${col}`);
+        var $currentCell = $(`*[data-rowNum="${row}"]`).children(`*[data-columnNum="${col}"]`);
+        $currentCell.removeClass().html(null);
         if (cell.shown) {
-          $currentCell.addClass('shown').removeClass('flagged').html(cell.adjMines);
-        } else if(cell.flagged) {
+          $currentCell.addClass(`shown ${mineHeatMapColors[cell.adjMines]}`).html(cell.adjMines);
+        } else if (cell.flagged) {
           $currentCell.addClass('flagged');
-        } 
-        else {
-          $currentCell.addClass('default').removeClass('flagged shown mine clicked-mine').html(null);
         }
       })
     })
@@ -229,11 +237,11 @@ function render() {
       alert('You won!')
     }
   } else {
-    $(`#${explosionCoordinates[0]}`).children(`.${explosionCoordinates[1]}`).addClass('clicked-mine').html('X');
+    $(`*[data-rowNum="${explosionCoordinates[0]}"]`).children(`*[data-columnNum="${explosionCoordinates[1]}"]`).addClass('clicked-mine mine');
     board.forEach(function(row) {
       row.forEach(function(cell) {
-        $(`#${cell.row}`).children(`.${cell.column}`).removeClass('flagged').css('cursor', 'default');
-        cell.mine && $(`#${cell.row}`).children(`.${cell.column}`).addClass('mine').html('X');
+        $(`*[data-rowNum="${cell.row}"]`).children(`*[data-columnNum="${cell.column}"]`).removeClass('flagged').addClass('game-end');
+        cell.mine && $(`*[data-rowNum="${cell.row}"]`).children(`*[data-columnNum="${cell.column}"]`).addClass('mine');
       })
     })
   }
