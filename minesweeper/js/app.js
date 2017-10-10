@@ -1122,7 +1122,7 @@ function render() {
         } else if(cell.flagged) {
           $currentCell.css('background-color', 'blue').html('F');
         } else {
-          $currentCell.css('background-color', 'white').html(null);
+          $currentCell.css('background-color', 'grey').html(null);
         }
       })
     })
@@ -1131,6 +1131,11 @@ function render() {
     }
   } else {
     $(`#${explosionCoordinates[0]}`).children(`.${explosionCoordinates[1]}`).css('background-color', 'red').html('X');
+    board.forEach(function(row) {
+      row.forEach(function(cell) {
+        cell.mine && $(`#${cell.row}`).children(`.${cell.column}`).html('X');
+      })
+    })
   }
 }
 // init();

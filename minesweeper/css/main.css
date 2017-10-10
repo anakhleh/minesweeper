@@ -2,31 +2,51 @@
   border: solid 2px black;
 } */
 
+/* body {
+  background-image: url('https://i.imgur.com/2c8YtTp.jpg');
+  background-size: cover;
+} */
+
 .title {
   writing-mode: vertical-rl;
   text-orientation: upright;
   letter-spacing: 5px;
   text-align: center;
-  margin: 25px auto;
+  padding: 0;
+  height: 100%;
 }
 
-.game-screen {
-  height: 400px;
+@media (max-width: 550px) {
+  .title {
+    writing-mode: horizontal-tb;
+    text-orientation: mixed;
+    height: auto;
+  }
+}
+
+.main-screen {
+  height: 560px;
+  padding: 0;
+  position: relative;
 }
 
 table {
   border-collapse: collapse;
   text-align: center;
   vertical-align: middle;
-  margin: 30px auto;
+  margin: auto;
 }
 
 td {
+  text-align: center;
+  letter-spacing: 0;
+  line-height: 18px;
+  font-size: 15px;
   cursor: pointer;
   border: solid 1px black;
   height: 20px;
   width: 20px;
-  padding: 1px; 
+  padding: 0;
   /* box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24); */
 }
 
@@ -44,4 +64,12 @@ nav.difficulty, nav.gameplay {
 
 .gameBoard-screen, .difficulty-screen {
   display: none;
+}
+
+.gameBoard-screen, .difficulty-screen, .instructions-screen {
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
