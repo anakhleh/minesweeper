@@ -20,7 +20,7 @@ var gameOver;
 var explosionCoordinates;
 var startGame;
 var runTimer;
-var timer;
+var time;
 
 /*----- cached element references -----*/
 var $table = $('.gameBoard-screen');
@@ -52,8 +52,6 @@ function handleButtonClick() {
     case 'Intermediate':
     case 'Expert':
       startGame = true;
-      // runTimer = true;
-      // timer = 0;
       setInterval(function() {timer += 1;}, 1000);
       $button.parent().hide().siblings('.gameplay').show();
       $('.difficulty-screen').hide().siblings('.gameBoard-screen').show();
@@ -99,6 +97,10 @@ function init () {
     board[idx] = elem;
   })
 
+  time = 0;
+  runTimer = false;
+  $('.timer').html(`Time: ${time}`)
+  
   numFlagged = 0;
   winner = null;
   gameOver = null;
@@ -108,6 +110,14 @@ function init () {
   render();
 }
 
+function runGameTimer () {
+  if (runTimer) {
+    time += 1;
+    $('.timer').html(`Time: ${time}`);
+  }
+}
+var timer = setInterval(runGameTimer, 1000);
+
 function generateGameboard(boardSize) {
   boardHTMLRepresentation = 
   `<div class="win-loss-message"></div>
@@ -115,7 +125,7 @@ function generateGameboard(boardSize) {
     <caption>
       <div class="table-caption-content">
         <p class="mine-counter">Mines: 10</p>
-        <p class="timer">Timer</p>
+        <p class="timer">Time: 0</p>
       </div>
     </caption>
     <tbody>`;
@@ -190,12 +200,14 @@ function expandShownCells(row, col) {
   if (cell.mine) {
     return;
   } else if (cell.shown) {
-    return
+    return;
   } else if (cell.adjMines) {
     cell.shown = true;
-    return
+    cell.flagged && (numFlagged -= 1);
+    return;
   } else {
     cell.shown = true;
+    cell.flagged && (numFlagged -= 1);
     checkNeighbours(row, col).forEach(function(neighbour) {
       expandShownCells(neighbour.row, neighbour.column);
     })
@@ -211,6 +223,7 @@ function calculateWinner() {
 }
 
 function handleClick() {
+  runTimer = true;
   var row = parseInt($(this).parent().attr('data-rowNum'));
   var column = parseInt($(this).attr('data-columnNum'));
   if (winner || gameOver) {
@@ -227,22 +240,22 @@ function handleClick() {
 }
 
 function handleRightClick() {
-  var row = parseInt($(this).parent().attr('data-rowNum'));
-  var column = parseInt($(this).attr('data-columnNum'));
-  if (winner || gameOver) {
+  var cell = board[parseInt($(this).parent().attr('data-rowNum'))][parseInt($(this).attr('data-columnNum'))]
+  // var row = parseInt($(this).parent().attr('data-rowNum'));
+  // var column = parseInt($(this).attr('data-columnNum'));
+  if (winner || gameOver || cell.shown) {
     return;
-  } else if(board[row][column].flagged) {
-    board[row][column].flagged = false;
+  } else if (cell.flagged) {
+    cell.flagged = false;
     numFlagged -= 1;
   } else {
-    board[row][column].flagged = true;
+    cell.flagged = true;
     numFlagged += 1;
   }
   render();
 }
 
 function render() {
-  // runTimer && $('.timer').html(timer);
   startGame && $('.mine-counter').html(`Mines: ${numMines}`);
   startGame = false;
   if (!gameOver) {
@@ -260,8 +273,12 @@ function render() {
     })
     if (winner) {
       $('.win-loss-message').html("You win!").fadeIn(500).delay(1000).fadeOut(1000, function() {$('.win-loss-message').hide();});
+      runTimer = false;
+      clearInterval(timer);
     }
   } else {
+    runTimer = false;
+    clearInterval(timer);
     $(`*[data-rowNum="${explosionCoordinates[0]}"]`).children(`*[data-columnNum="${explosionCoordinates[1]}"]`).addClass('clicked-mine mine');
     board.forEach(function(row) {
       row.forEach(function(cell) {
