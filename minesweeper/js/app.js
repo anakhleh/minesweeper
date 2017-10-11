@@ -101,7 +101,10 @@ function init () {
 }
 
 function generateGameboard(boardSize) {
-  boardHTMLRepresentation = `<table>`;
+  boardHTMLRepresentation = 
+  `<table>
+    <div class="win-loss-message"></div>
+    <tbody>`;
   for(var i = 0; i < boardSize; i++) {
     boardHTMLRepresentation += `
       <tr data-rowNum="${i}">
@@ -112,7 +115,9 @@ function generateGameboard(boardSize) {
     }
     boardHTMLRepresentation += `</tr>`;
   }
-  boardHTMLRepresentation += `
+  boardHTMLRepresentation += 
+  `
+    </tbody>
   </table>`;
   return boardHTMLRepresentation;
 }
@@ -234,7 +239,7 @@ function render() {
       })
     })
     if (winner) {
-      alert('You won!')
+      $('.win-loss-message').html("You win!").fadeIn(500).delay(1000).fadeOut(1000, function() {$('.win-loss-message').hide();});
     }
   } else {
     $(`*[data-rowNum="${explosionCoordinates[0]}"]`).children(`*[data-columnNum="${explosionCoordinates[1]}"]`).addClass('clicked-mine mine');
@@ -244,5 +249,6 @@ function render() {
         cell.mine && $(`*[data-rowNum="${cell.row}"]`).children(`*[data-columnNum="${cell.column}"]`).addClass('mine');
       })
     })
+    $('.win-loss-message').html("Game Over!").fadeIn(500).delay(1000).fadeOut(1000, function() {$('.win-loss-message').hide();});
   }
 }
