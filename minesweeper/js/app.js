@@ -272,7 +272,8 @@ function render() {
       })
     })
     if (winner) {
-      $('.win-loss-message').html("You win!").fadeIn(500).delay(1000).fadeOut(1000, function() {$('.win-loss-message').hide();});
+      // $('.win-loss-message').html("You cleared the minefield!").fadeIn(500).delay(1000).fadeOut(1000, function() {$('.win-loss-message').hide();});
+      $('.win-loss-message').html("You cleared the minefield!").show().delay(3000).fadeOut(1000, function() {$('.win-loss-message').hide();});
       runTimer = false;
       clearInterval(timer);
     }
@@ -286,6 +287,7 @@ function render() {
         cell.mine && $(`*[data-rowNum="${cell.row}"]`).children(`*[data-columnNum="${cell.column}"]`).addClass('mine');
       })
     })
-    $('.win-loss-message').html("Game Over!").fadeIn(500).delay(1000).fadeOut(1000, function() {$('.win-loss-message').hide();});
+    // $('.win-loss-message').html("You hit a mine, please try again").fadeIn(500).delay(1000).fadeOut(1000, function() {$('.win-loss-message').hide();});
+    $('.win-loss-message').html("You hit a mine, please try again.").show().delay(3000).fadeOut(1000, function() {$('.win-loss-message').hide();});
   }
 }

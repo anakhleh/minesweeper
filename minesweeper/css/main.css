@@ -2,18 +2,23 @@
   border: solid 2px black;
 } */
 
-/* body {
-  background-image: url('https://i.imgur.com/7pr4qIz.jpg');
+body {
+  background-image: url('https://i.imgur.com/ocxIOzf.jpg');
   background-size: cover;
-} */
+}
+
+main.row {
+  margin: 5px 0 0 0;
+}
 
 .title {
   writing-mode: vertical-rl;
   text-orientation: upright;
-  letter-spacing: 5px;
+  /* letter-spacing: 5px; */
   text-align: center;
   padding: 0;
   height: 100%;
+  font-family: 'Rubik', sans-serif;
 }
 
 @media (max-width: 550px) {
@@ -58,8 +63,7 @@ table {
   vertical-align: middle;
   margin: auto;
   z-index: 2;
-  border-radius: 20px;
-  /* opacity: 0.7; */
+  /* opacity: 0.75; */
 }
 
 td {
@@ -72,11 +76,10 @@ td {
   width: 20px;
   padding: 0;
   color: black;
-  /* border: solid 1px #BDBDBD; */
-  border: solid 1px #BDBDBD;
+  /* border: solid 1px #BDBDBD; 7B7B7B  5D5D5D  363636*/
+  border: solid 2px #BDBDBD;
   background-color: #BDBDBD;
   box-shadow: inset -2px -2px #7B7B7B;
-  /* border-radius: 10px; */
 }
 
 .game-end {
@@ -92,7 +95,7 @@ td {
 }
 
 .clicked-mine {
-  background-color: red;
+  background-color: #000;
 }
 
 .mine {
@@ -162,6 +165,18 @@ nav.difficulty, nav.gameplay {
   display: none;
 }
 
+/* button.difficulty {
+  background-color: #E57661;
+}
+
+button.gameplay {
+  background-color: #F8C58C;
+}
+
+button.start-screen {
+  background-color: #F8E7A2;
+} */
+
 .gameBoard-screen, .difficulty-screen {
   display: none;
 }
@@ -175,8 +190,12 @@ nav.difficulty, nav.gameplay {
 }
 
 .win-loss-message {
+  overflow: hidden;
+  white-space: nowrap;
+  margin: 0 auto;
+  font-family: 'Rubik', sans-serif;
   font-size: 40px;
-  color: red;
+  color: black;
   text-align: center;
   position: absolute;
   top: 50%;
@@ -184,4 +203,21 @@ nav.difficulty, nav.gameplay {
   transform: translate(-50%, -50%);
   display: none;
   z-index: 100;
+  animation: 
+    typing 3.5s steps(40, end);
+}
+
+/* The typing effect */
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+footer {
+  text-align: center;
+  font-size: 10px;
+}
+
+footer > p {
+  margin: 0;
 }
