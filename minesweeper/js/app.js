@@ -14,9 +14,13 @@ var mineHeatMapColors = {
 var board;
 var boardDimensions;
 var numMines;
+var numFlagged;
 var winner;
 var gameOver;
 var explosionCoordinates;
+var startGame;
+var runTimer;
+var timer;
 
 /*----- cached element references -----*/
 var $table = $('.gameBoard-screen');
@@ -34,7 +38,6 @@ $navBar.on('click', 'button', handleButtonClick);
 
 function resetGame() {
   init();
-  console.log('game reset')
 }
 
 function handleButtonClick() {
@@ -48,6 +51,10 @@ function handleButtonClick() {
     case 'Beginner':
     case 'Intermediate':
     case 'Expert':
+      startGame = true;
+      // runTimer = true;
+      // timer = 0;
+      setInterval(function() {timer += 1;}, 1000);
       $button.parent().hide().siblings('.gameplay').show();
       $('.difficulty-screen').hide().siblings('.gameBoard-screen').show();
       boardDimensions = parseInt($button.attr('data-boardDimension'));
@@ -92,6 +99,7 @@ function init () {
     board[idx] = elem;
   })
 
+  numFlagged = 0;
   winner = null;
   gameOver = null;
   randomMinePlacement(boardDimensions);
@@ -102,8 +110,14 @@ function init () {
 
 function generateGameboard(boardSize) {
   boardHTMLRepresentation = 
-  `<table>
-    <div class="win-loss-message"></div>
+  `<div class="win-loss-message"></div>
+  <table>
+    <caption>
+      <div class="table-caption-content">
+        <p class="mine-counter">Mines: 10</p>
+        <p class="timer">Timer</p>
+      </div>
+    </caption>
     <tbody>`;
   for(var i = 0; i < boardSize; i++) {
     boardHTMLRepresentation += `
@@ -219,14 +233,20 @@ function handleRightClick() {
     return;
   } else if(board[row][column].flagged) {
     board[row][column].flagged = false;
+    numFlagged -= 1;
   } else {
     board[row][column].flagged = true;
+    numFlagged += 1;
   }
   render();
 }
 
 function render() {
+  // runTimer && $('.timer').html(timer);
+  startGame && $('.mine-counter').html(`Mines: ${numMines}`);
+  startGame = false;
   if (!gameOver) {
+    $('.mine-counter').html(`Mines: ${numMines - numFlagged}`);
     board.forEach(function(tableRow, row) {
       tableRow.forEach(function(cell, col) {
         var $currentCell = $(`*[data-rowNum="${row}"]`).children(`*[data-columnNum="${col}"]`);

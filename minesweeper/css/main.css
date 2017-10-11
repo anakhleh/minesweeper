@@ -3,7 +3,7 @@
 } */
 
 /* body {
-  background-image: url('https://i.imgur.com/2c8YtTp.jpg');
+  background-image: url('https://i.imgur.com/7pr4qIz.jpg');
   background-size: cover;
 } */
 
@@ -30,12 +30,36 @@
   position: relative;
 }
 
+caption {
+  caption-side: bottom;
+}
+
+.table-caption-content {
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.table-caption-content > p {
+  display: inline-flex;
+}
+
+.timer {
+  text-align: right;
+}
+
+.mine-counter {
+  text-align: left;
+}
+
 table {
   border-collapse: collapse;
   text-align: center;
   vertical-align: middle;
   margin: auto;
   z-index: 2;
+  border-radius: 20px;
+  /* opacity: 0.7; */
 }
 
 td {
@@ -48,9 +72,11 @@ td {
   width: 20px;
   padding: 0;
   color: black;
+  /* border: solid 1px #BDBDBD; */
   border: solid 1px #BDBDBD;
   background-color: #BDBDBD;
   box-shadow: inset -2px -2px #7B7B7B;
+  /* border-radius: 10px; */
 }
 
 .game-end {
