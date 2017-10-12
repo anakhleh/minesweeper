@@ -4,7 +4,7 @@
 
 */
 
-// Classes
+/*          Classes         */
 
 class Cell {
   constructor (mine, adjMines, flagged, shown) {
@@ -16,7 +16,7 @@ class Cell {
 }
 
 
-// Constants
+/*          Constants         */
 
 var mineHeatMapColors = {
   1: 'adjMines-1',
@@ -30,7 +30,7 @@ var mineHeatMapColors = {
 }
 
 
-// App's state (variables)
+/*          App's state (variables)         */
 
 var board;
 var boardDimensions;
@@ -44,7 +44,7 @@ var runTimer;
 var time;
 
 
-// Cached element references
+/*          Cached element references         */
 
 var $table = $('.gameBoard-screen');
 var $navBar = $('nav');
@@ -56,7 +56,7 @@ var $navBar = $('nav');
 
 */
 
-// Gameplay click event listener & corresponding event handler
+/*          Gameplay click event listener & corresponding event handler         */
 
 function handleClick() {
   runTimer = true;
@@ -78,12 +78,10 @@ function handleClick() {
 $table.on('click', 'td', handleClick);
 
 
-// Gameplay right click event listener & corresponding event handler
+/*          Gameplay right click event listener & corresponding event handler         */
 
 function handleRightClick() {
   var cell = board[parseInt($(this).parent().attr('data-rowNum'))][parseInt($(this).attr('data-columnNum'))]
-  // var row = parseInt($(this).parent().attr('data-rowNum'));
-  // var column = parseInt($(this).attr('data-columnNum'));
   if (winner || gameOver || cell.shown) {
     return;
   } else if (cell.flagged) {
@@ -99,7 +97,7 @@ function handleRightClick() {
 $table.on('contextmenu', 'td', handleRightClick);
 
 
-// Button click event listeners & corresponding event handler
+/*          Button click event listeners & corresponding event handler         */
 
 function handleButtonClick() {
   var $button = $(this);
@@ -140,43 +138,13 @@ function handleButtonClick() {
 $navBar.on('click', 'button', handleButtonClick);
 
 
-/*----- functions -----*/
+/*
 
-function resetGame() {
-  init();
-}
+  Functions
 
-function init () {
-  board = new Array(boardDimensions).fill(null);
-  board.forEach(function(elem, idx) {
-    elem = new Array(boardDimensions).fill(null);
-    elem = elem.map(function() {
-      return new Cell(false, null, false, false);
-    });
-    board[idx] = elem;
-  })
+*/
 
-  time = 0;
-  runTimer = false;
-  clearInterval(timer);
-  $('.timer').html(`Time: ${time}`)
-  
-  numFlagged = 0;
-  winner = null;
-  gameOver = null;
-  randomMinePlacement(boardDimensions);
-  assignAdjMines();
-
-  render();
-}
-
-function runGameTimer () {
-  if (runTimer) {
-    time += 1;
-    $('.timer').html(`Time: ${time}`);
-  }
-}
-var timer = setInterval(runGameTimer, 1000);
+/*          Creates gameboard and adds it to the DOM         */
 
 function generateGameboard(boardSize) {
   boardHTMLRepresentation = 
@@ -206,6 +174,94 @@ function generateGameboard(boardSize) {
   return boardHTMLRepresentation;
 }
 
+
+/*    Initializes the beginning state of the game (fills gameboard and defines variables) 
+        and calls the render function         */
+
+function init () {
+  board = new Array(boardDimensions).fill(null);
+  board.forEach(function(elem, idx) {
+    elem = new Array(boardDimensions).fill(null);
+    elem = elem.map(function() {
+      return new Cell(false, null, false, false);
+    });
+    board[idx] = elem;
+  })
+
+  time = 0;
+  runTimer = false;
+  clearInterval(timer);
+  $('.timer').html(`Time: ${time}`)
+  
+  numFlagged = 0;
+  winner = null;
+  gameOver = null;
+  randomMinePlacement(boardDimensions);
+  assignAdjMines();
+
+  render();
+}
+
+
+/*          Render function called at any change in game state          */
+
+function render() {
+  startGame && $('.mine-counter').html(`Mines: ${numMines}`);
+  startGame = false;
+  if (!gameOver) {
+    $('.mine-counter').html(`Mines: ${numMines - numFlagged}`);
+    board.forEach(function(tableRow, row) {
+      tableRow.forEach(function(cell, col) {
+        var $currentCell = $(`*[data-rowNum="${row}"]`).children(`*[data-columnNum="${col}"]`);
+        $currentCell.removeClass().html(null);
+        if (cell.shown) {
+          $currentCell.addClass(`shown ${mineHeatMapColors[cell.adjMines]}`).html(cell.adjMines);
+        } else if (cell.flagged) {
+          $currentCell.addClass('flagged');
+        }
+      })
+    })
+    if (winner) {
+      $('.win-loss-message').html("Minefield cleared!").show().delay(2000).fadeOut(1000, function() {$('.win-loss-message').hide();});
+      runTimer = false;
+      clearInterval(timer);
+    }
+  } else {
+    runTimer = false;
+    clearInterval(timer);
+    $(`*[data-rowNum="${explosionCoordinates[0]}"]`).children(`*[data-columnNum="${explosionCoordinates[1]}"]`).addClass('clicked-mine mine');
+    board.forEach(function(row) {
+      row.forEach(function(cell) {
+        $(`*[data-rowNum="${cell.row}"]`).children(`*[data-columnNum="${cell.column}"]`).removeClass('flagged').addClass('game-end');
+        cell.mine && $(`*[data-rowNum="${cell.row}"]`).children(`*[data-columnNum="${cell.column}"]`).addClass('mine');
+      })
+    })
+    $('.win-loss-message').html("Game over!").show().delay(1500).fadeOut(1000, function() {$('.win-loss-message').hide();});
+  }
+}
+
+
+/*          Resets the current game by re-initializing variables and state         */
+
+function resetGame() {
+  init();
+}
+
+
+/*          Starts and runs the game's timer following the beginning of each game         */
+
+function runGameTimer () {
+  if (runTimer) {
+    time += 1;
+    $('.timer').html(`Time: ${time}`);
+  }
+}
+var timer = setInterval(runGameTimer, 1000);
+
+
+/*          Random number generator function used to assign mines randomly 
+              throughout the gameboard (with no repeats)         */
+
 function getRandomIntInclusive(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
@@ -223,6 +279,26 @@ function randomMinePlacement(dimensions) {
     }
   }
 }
+
+
+/*          Creates an array of the neighbouring cells of an individual cell on the board         */
+
+function checkNeighbours(row, col) {
+  var neighbours = []; 
+  for (var i = (row - 1); i < (row + 2); i++) {
+    for (var j = (col - 1); j < (col + 2); j++) {
+      if (i >= 0 && j >= 0 && i <= (boardDimensions - 1) && j <= (boardDimensions - 1) && (i !== row || j !== col)) {
+        var neighbour = board[i][j];
+        neighbours.push(neighbour);
+      }
+    }
+  }
+  return neighbours;
+}
+
+
+/*          Scans the entire board and assigns the number of adjacent mines 
+              for each cell (run upon board creation)         */
 
 function assignAdjMines() {
   for (var i = 0; i < boardDimensions; i++) {
@@ -242,18 +318,14 @@ function assignAdjMines() {
   }
 }
 
-function checkNeighbours(row, col) {
-  var neighbours = []; 
-  for (var i = (row - 1); i < (row + 2); i++) {
-    for (var j = (col - 1); j < (col + 2); j++) {
-      if (i >= 0 && j >= 0 && i <= (boardDimensions - 1) && j <= (boardDimensions - 1) && (i !== row || j !== col)) {
-        var neighbour = board[i][j];
-        neighbours.push(neighbour);
-      }
-    }
-  }
-  return neighbours;
-}
+
+/*
+
+  Set's the shown property of a mine-free cell to "true" and checks its neighbours for their adjMines values.
+  If a neighbour has no adjacent mines, that cell's neighbours get checked. The process is conducted recursively
+  until all neighbours either have mines adjacent to them or have previously been shown.
+
+*/
 
 function expandShownCells(row, col) {
   cell = board[row][col];
@@ -274,45 +346,12 @@ function expandShownCells(row, col) {
   }
 }
 
+/*          Scans the entire gameboard to determine if all cell's have been shown         */
+
 function calculateWinner() {
   winner = board.every(function(tableRow) {
     return tableRow.every(function(cell) {
       return (cell.mine || cell.shown);
     });
   })
-}
-
-function render() {
-  startGame && $('.mine-counter').html(`Mines: ${numMines}`);
-  startGame = false;
-  if (!gameOver) {
-    $('.mine-counter').html(`Mines: ${numMines - numFlagged}`);
-    board.forEach(function(tableRow, row) {
-      tableRow.forEach(function(cell, col) {
-        var $currentCell = $(`*[data-rowNum="${row}"]`).children(`*[data-columnNum="${col}"]`);
-        $currentCell.removeClass().html(null);
-        if (cell.shown) {
-          $currentCell.addClass(`shown ${mineHeatMapColors[cell.adjMines]}`).html(cell.adjMines);
-        } else if (cell.flagged) {
-          $currentCell.addClass('flagged');
-        }
-      })
-    })
-    if (winner) {
-      $('.win-loss-message').html("You cleared the minefield!").show().delay(3000).fadeOut(1000, function() {$('.win-loss-message').hide();});
-      runTimer = false;
-      clearInterval(timer);
-    }
-  } else {
-    runTimer = false;
-    clearInterval(timer);
-    $(`*[data-rowNum="${explosionCoordinates[0]}"]`).children(`*[data-columnNum="${explosionCoordinates[1]}"]`).addClass('clicked-mine mine');
-    board.forEach(function(row) {
-      row.forEach(function(cell) {
-        $(`*[data-rowNum="${cell.row}"]`).children(`*[data-columnNum="${cell.column}"]`).removeClass('flagged').addClass('game-end');
-        cell.mine && $(`*[data-rowNum="${cell.row}"]`).children(`*[data-columnNum="${cell.column}"]`).addClass('mine');
-      })
-    })
-    $('.win-loss-message').html("You hit a mine, please try again.").show().delay(3000).fadeOut(1000, function() {$('.win-loss-message').hide();});
-  }
 }
