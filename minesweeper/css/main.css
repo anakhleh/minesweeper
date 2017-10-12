@@ -1,9 +1,6 @@
-/* .main-section {
-  border: solid 2px black;
-} */
-
 body {
   background-image: url('https://i.imgur.com/ocxIOzf.jpg');
+  background-repeat: no-repeat;
   background-size: cover;
 }
 
@@ -15,9 +12,8 @@ main.row {
 .title {
   writing-mode: vertical-rl;
   text-orientation: upright;
-  /* text-align: center; */
+  text-align: center;
   padding: 0;
-  height: 100%;
   font-family: 'Rubik', sans-serif;
   margin: 0 auto;
 }
@@ -218,6 +214,7 @@ footer {
   height: 5%;
   text-align: center;
   font-size: 10px;
+  margin-top: 20px;
 }
 
 footer > p {
