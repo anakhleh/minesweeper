@@ -15,6 +15,7 @@ main.row {
   text-align: center;
   padding: 0;
   font-family: 'Rubik', sans-serif;
+  font-weight: 900;
   margin: 0 auto;
 }
 
@@ -24,12 +25,63 @@ main.row {
     text-orientation: mixed;
     height: auto;
   }
+
+  h2 {
+    font-size: 2.4rem;
+  }
+
+  h4 {
+    font-size: 1.8rem;
+  }
+
+  h5 {
+    font-size: 1.5rem;
+  }
+
+  .instructions-screen > p, .instructions-screen > p > span {
+    font-size: 1rem;
+  }
+
+  button {
+    color: #E3E3E3;
+  }
 }
 
 .main-screen {
   height: 560px;
   padding: 0;
   position: relative;
+}
+
+.instructions {
+  font-family: 'Rubik', sans-serif; 
+}
+
+.instructions.main-title {
+  font-weight: 900;
+}
+
+.instructions.sub-title {
+  font-weight: 700;
+  font-style: italic;
+}
+
+.instructions.headline {
+  font-weight: 700;
+}
+
+.instructions-screen > p {
+  font-family: 'Roboto Mono', monospace;
+  font-weight: 400;
+}
+
+.instructions-screen > p > span {
+  font-weight: 700;
+}
+
+.difficulty-screen {
+  font-family: 'Rubik', sans-serif;
+  font-weight: 900;
 }
 
 caption {
@@ -60,7 +112,6 @@ table {
   vertical-align: middle;
   margin: auto;
   z-index: 2;
-  /* opacity: 0.75; */
 }
 
 td {
@@ -73,7 +124,6 @@ td {
   width: 20px;
   padding: 0;
   color: black;
-  /* border: solid 1px #BDBDBD; 7B7B7B  5D5D5D  363636*/
   border: solid 2px #BDBDBD;
   background-color: #BDBDBD;
   box-shadow: inset -2px -2px #7B7B7B;
@@ -191,6 +241,7 @@ button.start-screen {
   white-space: nowrap;
   margin: 0 auto;
   font-family: 'Rubik', sans-serif;
+  font-weight: 700;
   font-size: 40px;
   color: black;
   text-align: center;

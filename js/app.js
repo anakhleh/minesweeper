@@ -42,6 +42,7 @@ var explosionCoordinates;
 var startGame;
 var runTimer;
 var time;
+var timerID;
 
 
 /*          Cached element references         */
@@ -59,6 +60,7 @@ var $navBar = $('nav');
 /*          Gameplay click event listener & corresponding event handler         */
 
 function handleClick() {
+  (!runTimer) && (timerID = setInterval(gameTimer, 1000));
   runTimer = true;
   var row = parseInt($(this).parent().attr('data-rowNum'));
   var column = parseInt($(this).attr('data-columnNum'));
@@ -111,7 +113,6 @@ function handleButtonClick() {
     case 'Intermediate':
     case 'Expert':
       startGame = true;
-      setInterval(function() {timer += 1;}, 1000);
       $button.parent().hide().siblings('.gameplay').show();
       $('.difficulty-screen').hide().siblings('.gameBoard-screen').show();
       boardDimensions = parseInt($button.attr('data-boardDimension'));
@@ -125,11 +126,13 @@ function handleButtonClick() {
       break;
 
     case 'Change Difficulty':
+      clearInterval(timerID);
       $button.parent().hide().siblings('.difficulty').show();
       $('.gameBoard-screen').hide().siblings('.difficulty-screen').show();
       break;
 
     case 'Main Menu':
+      clearInterval(timerID);
       $button.parent().hide().siblings('.start-screen').show();
       $('.gameBoard-screen').hide().siblings('.instructions-screen').show();
   }
@@ -190,7 +193,6 @@ function init () {
 
   time = 0;
   runTimer = false;
-  clearInterval(timer);
   $('.timer').html(`Time: ${time}`)
   
   numFlagged = 0;
@@ -224,11 +226,11 @@ function render() {
     if (winner) {
       $('.win-loss-message').html("Minefield cleared!").show().delay(2000).fadeOut(1000, function() {$('.win-loss-message').hide();});
       runTimer = false;
-      clearInterval(timer);
+      clearInterval(timerID);
     }
   } else {
     runTimer = false;
-    clearInterval(timer);
+    clearInterval(timerID);
     $(`*[data-rowNum="${explosionCoordinates[0]}"]`).children(`*[data-columnNum="${explosionCoordinates[1]}"]`).addClass('clicked-mine mine');
     board.forEach(function(row) {
       row.forEach(function(cell) {
@@ -244,20 +246,19 @@ function render() {
 /*          Resets the current game by re-initializing variables and state         */
 
 function resetGame() {
+  clearInterval(timerID);
   init();
 }
 
 
-/*          Starts and runs the game's timer following the beginning of each game         */
+/*          Starts and runs the game's timer following the start of each game (first click)         */
 
-function runGameTimer () {
+function gameTimer () {
   if (runTimer) {
     time += 1;
     $('.timer').html(`Time: ${time}`);
   }
 }
-var timer = setInterval(runGameTimer, 1000);
-
 
 /*          Random number generator function used to assign mines randomly 
               throughout the gameboard (with no repeats)         */

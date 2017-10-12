@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>MineSweeper</title>
-  <link href="https://fonts.googleapis.com/css?family=Rubik:900" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,700|Rubik:700,900" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
   <link rel="stylesheet" href="css/main.css">
   <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
@@ -20,8 +20,18 @@
     <section class="ten columns main-section">
       <section class="row main-screen" oncontextmenu="return false;">
           <div class="twelve columns gameBoard-screen"></div>
-          <div class="twelve columns instructions-screen">Instructions</div>
-          <div class="twelve columns difficulty-screen">Choose your difficulty:</div>
+          <div class="twelve columns instructions-screen">
+            <h2 class="instructions main-title">Welcome to Minesweeper</h2>
+            <h4 class="instructions sub-title">Can you clear the minefield?</h4>
+            <h5 class="instructions headline">Instructions</h5>
+            <p><span>Click on cells</span> to reveal their contents, but be sure that you <span>don’t click on a mine.</span></p>
+            <p>When a cell is cleared, it will display how many neighboring mines it has. If cells do not have neighboring mines, they will uncover their neighbors until all uncovered cells are neighbored by mines.</p>
+            <p>You can <span>keep track of mines by right-clicking</span> on cells to mark them with flags!</p>
+            <p><span>Win by clearing the entire minefield, and avoiding all mines. Good luck!</span></p>
+          </div>
+          <div class="twelve columns difficulty-screen">
+            <h1>Choose your difficulty:</h1>
+          </div>
       </section>
      
       <section class="row button-section">
@@ -44,7 +54,7 @@
   
   <footer class="row">
     <p class="two columns">Made by Nedim</p>
-    <p class"eight columns offset-by-two">Icons made by <a href="https://www.flaticon.com/authors/simpleicon" title="SimpleIcon">SimpleIcon</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></p>
+    <p class"eight columns offset-by-two">Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a> & <a href="https://www.flaticon.com/authors/creaticca-creative-agency" title="Creaticca Creative Agency">Creaticca Creative Agency</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></p>
   </footer>
   <script src="js/app.js"></script>
 </body>
