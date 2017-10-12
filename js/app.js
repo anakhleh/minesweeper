@@ -125,7 +125,7 @@ function handleButtonClick() {
       resetGame();
       break;
 
-    case 'Change Difficulty':
+    case 'Difficulty':
       clearInterval(timerID);
       $button.parent().hide().siblings('.difficulty').show();
       $('.gameBoard-screen').hide().siblings('.difficulty-screen').show();
