@@ -1,3 +1,11 @@
+html {
+  height: 100%;
+}
+
+body {
+  min-height: 100%;
+}
+
 body {
   background-image: url('https://i.imgur.com/ocxIOzf.jpg');
   background-repeat: no-repeat;
@@ -5,7 +13,6 @@ body {
 }
 
 main.row {
-  /* height: 80%; */
   margin: 5px 0 0 0;
 }
 
@@ -96,6 +103,7 @@ caption {
 
 .table-caption-content > p {
   display: inline-flex;
+  margin: 0;
 }
 
 .timer {
@@ -211,18 +219,6 @@ th:last-child, td:last-child {
 nav.difficulty, nav.gameplay {
   display: none;
 }
-
-/* button.difficulty {
-  background-color: #E57661;
-}
-
-button.gameplay {
-  background-color: #F8C58C;
-}
-
-button.start-screen {
-  background-color: #F8E7A2;
-} */
 
 .gameBoard-screen, .difficulty-screen {
   display: none;
