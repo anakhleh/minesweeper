@@ -60,7 +60,7 @@ var $navBar = $('nav');
 /*          Gameplay click event listener & corresponding event handler         */
 
 function handleClick() {
-  (!runTimer) && (timerID = setInterval(gameTimer, 1000));
+  if (!runTimer) timerID = setInterval(gameTimer, 1000);
   runTimer = true;
   var row = parseInt($(this).parent().attr('data-rowNum'));
   var column = parseInt($(this).attr('data-columnNum'));
@@ -122,6 +122,7 @@ function handleButtonClick() {
       break;
     
     case 'Reset':
+      $button.blur();
       resetGame();
       break;
 
@@ -320,13 +321,9 @@ function assignAdjMines() {
 }
 
 
-/*
-
-  Set's the shown property of a mine-free cell to "true" and checks its neighbours for their adjMines values.
-  If a neighbour has no adjacent mines, that cell's neighbours get checked. The process is conducted recursively
-  until all neighbours either have mines adjacent to them or have previously been shown.
-
-*/
+/*          Set's the shown property of a mine-free cell to "true" and checks its neighbours for their adjMines values.
+              If a neighbour has no adjacent mines, that cell's neighbours get checked. The process is conducted recursively
+                until all neighbours either have mines adjacent to them or have previously been shown.         */
 
 function expandShownCells(row, col) {
   cell = board[row][col];

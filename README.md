@@ -7,11 +7,29 @@ This classic single-player puzzle game tasks a user with the objective of cleari
 
 ### Screenshots
 
+<img src="https://i.imgur.com/lXMG1DM.png"
+     alt="Minesweeper mockup on MacBook"
+     style="margin: 0 auto;" />
+
+---
+
+<img src="https://i.imgur.com/YHbno38.png"
+     alt="Minesweeper mainscreen"
+     style="margin: 0 auto;" />
+
+---
+
+<img src="https://i.imgur.com/HbRmzA7.png"
+     alt="Minesweeper game winner message"
+     style="margin: 0 auto;" />
+
 ---
 
 ## Technologies Used
 
-- HTML, CSS and Javascript
+- HTML
+- CSS
+- Javascript
 - jQuery
 - Skeleton
 

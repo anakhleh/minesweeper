@@ -1,11 +1,37 @@
+html, body {
+  height: 100%;
+}
+.table-container {
+  display: table;
+  height: 100%;
+  width: 100%;
+}
+.table-block {
+  display: table-row;
+  height: 1px;
+}
+.footer-push {
+  height: auto;
+}
+#footer {
+  /* Placeholder footer styles */
+  text-align: center;
+  font-size: 10px;
+}
+
 body {
-  background-image: url('https://i.imgur.com/ocxIOzf.jpg');
-  background-repeat: no-repeat;
+  background: url('https://i.imgur.com/ocxIOzf.jpg') no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
   background-size: cover;
+  position: relative;
+  margin: 0;
 }
 
 main.row {
-  margin: 5px 0 0 0;
+  margin-top: 25px;
+  margin-bottom: 5px;
 }
 
 .title {
@@ -16,34 +42,6 @@ main.row {
   font-family: 'Rubik', sans-serif;
   font-weight: 900;
   margin: 0 auto;
-}
-
-@media (max-width: 550px) {
-  .title {
-    writing-mode: horizontal-tb;
-    text-orientation: mixed;
-    height: auto;
-  }
-
-  h2 {
-    font-size: 2.4rem;
-  }
-
-  h4 {
-    font-size: 1.8rem;
-  }
-
-  h5 {
-    font-size: 1.5rem;
-  }
-
-  .instructions-screen > p, .instructions-screen > p > span {
-    font-size: 1rem;
-  }
-
-  button {
-    color: #E3E3E3;
-  }
 }
 
 .main-screen {
@@ -249,14 +247,72 @@ nav.difficulty, nav.gameplay {
   to { width: 100% }
 }
 
-footer {
-  height: 5%;
-  text-align: center;
-  font-size: 10px;
-  margin-top: 20px;
-}
-
-footer > p {
+.credits {
   display: inline-block;
   margin: 0;
+}
+
+button {
+  color: #E3E3E3;
+}
+
+.button:hover,
+button:hover,
+.button:focus,
+button:focus {
+  color: #393939;
+  background-color: #E3E3E3;
+}
+
+a.nav-link:link {
+   color: #222;
+   text-decoration: none;
+}
+
+a.nav-link:visited {
+   color: #222;
+   text-decoration: none;
+}
+
+a.nav-link:hover {
+   color: #222;
+   text-decoration: none;
+}
+
+a.nav-link:active {
+   color: #222;
+   text-decoration: none;
+}
+
+@media (max-width: 550px) {
+  .title {
+    writing-mode: horizontal-tb;
+    text-orientation: mixed;
+    height: auto;
+  }
+
+  h2 {
+    font-size: 2.4rem;
+  }
+
+  h4 {
+    font-size: 1.8rem;
+  }
+
+  h5 {
+    font-size: 1.5rem;
+  }
+
+  .instructions-screen > p, .instructions-screen > p > span {
+    font-size: 1rem;
+  }
+
+  td {
+    height: 22px;
+    width: 22px;
+  }
+
+  .main-screen {
+    height: 598px;
+  }
 }
