@@ -210,10 +210,10 @@ function init () {
 /*          Render function called at any change in game state          */
 
 function render() {
-  if (startGame) $('.mine-counter').html(`Mines: ${numMines}`);
+  if (startGame) $('.mine-counter').html(`<img src="https://i.imgur.com/wAwd92F.png" alt="Mine icon"/> ${numMines}`);
   startGame = false;
   if (!gameOver) {
-    $('.mine-counter').html(`Mines: ${numMines - numFlagged}`);
+    $('.mine-counter').html(`<img src="https://i.imgur.com/wAwd92F.png" alt="Mine icon"/> ${numMines - numFlagged}`);
     board.forEach(function(tableRow, row) {
       tableRow.forEach(function(cell, col) {
         var $currentCell = $(`*[data-rowNum="${row}"]`).children(`*[data-columnNum="${col}"]`);

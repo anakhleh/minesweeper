@@ -1,5 +1,5 @@
 
-<img src="https://i.imgur.com/GfhvaKY.png" alt="Minesweeper mockup on MacBook" style="max-width: 7%;"/>
+<img src="https://i.imgur.com/Nd7i2Fh.png" alt="Minesweeper mockup on MacBook" style="max-width: 7%;"/>
 
 # Minesweeper
 

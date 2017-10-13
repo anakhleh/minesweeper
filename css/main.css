@@ -148,7 +148,7 @@ caption {
 }
 
 .table-caption-content {
-  margin: 0;
+  margin: auto 0;
   display: flex;
   justify-content: space-between;
 }
@@ -258,6 +258,10 @@ th:last-child, td:last-child {
     Main screen content initial display values, and positioning on screen
 
 */
+
+.button-section {
+  margin-top: 20px;
+}
 
 nav.difficulty, nav.gameplay {
   display: none;
