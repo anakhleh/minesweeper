@@ -1,23 +1,38 @@
 html, body {
   height: 100%;
 }
+
+/*     
+
+    Styles used to create the sticky footer, and maintain general layout     
+    
+*/
+
 .table-container {
   display: table;
   height: 100%;
   width: 100%;
 }
+
 .table-block {
   display: table-row;
   height: 1px;
 }
+
 .footer-push {
   height: auto;
 }
+
 #footer {
-  /* Placeholder footer styles */
   text-align: center;
   font-size: 10px;
 }
+
+/*     
+
+    Page background, and spacing of main page content
+
+*/
 
 body {
   background: url('https://i.imgur.com/ocxIOzf.jpg') no-repeat center center fixed; 
@@ -43,6 +58,13 @@ main.row {
   font-weight: 900;
   margin: 0 auto;
 }
+
+/*     
+
+    Styling of game-screen size and text
+
+*/
+
 
 .main-screen {
   height: 560px;
@@ -81,28 +103,11 @@ main.row {
   font-weight: 900;
 }
 
-caption {
-  caption-side: bottom;
-}
+/*     
 
-.table-caption-content {
-  margin: 0;
-  display: flex;
-  justify-content: space-between;
-}
+    Gameboard and gameplay styling
 
-.table-caption-content > p {
-  display: inline-flex;
-  margin: 0;
-}
-
-.timer {
-  text-align: right;
-}
-
-.mine-counter {
-  text-align: left;
-}
+*/
 
 table {
   border-collapse: collapse;
@@ -131,12 +136,48 @@ td {
   cursor: default;
 }
 
+/*     
+
+    Sytling of gameboard's caption (timer and mine counter)
+
+*/
+
+caption {
+  caption-side: bottom;
+  background: linear-gradient(-90deg, rgba(211, 211, 211, 1), rgba(211, 211, 211, 0), rgba(211, 211, 211, 1));
+}
+
+.table-caption-content {
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.table-caption-content > p {
+  display: inline-flex;
+  margin: 0;
+}
+
+.timer {
+  text-align: right;
+}
+
+.mine-counter {
+  text-align: left;
+}
+
+/*     
+
+    Sytling of gameboard cells when shown, flags, and mines
+
+*/
+
 .flagged {
   background-image: url('https://i.imgur.com/Flqlztk.png');
   background-repeat: no-repeat;
   background-attachment: scroll;
   background-position: center;
-  background-size: 18px;
+  background-size: 20px;
 }
 
 .clicked-mine {
@@ -150,7 +191,7 @@ td {
   background-repeat: no-repeat;
   background-attachment: scroll;
   background-position: center;
-  background-size: 18px;
+  background-size: 20px;
 }
 
 .shown {
@@ -198,6 +239,12 @@ td {
   background-color: #4d004b;
 }
 
+/*     
+
+    Overide of Skeleton's default table sytling
+
+*/
+
 th:first-child, td:first-child {
   padding: 1px;
 }
@@ -205,6 +252,12 @@ th:first-child, td:first-child {
 th:last-child, td:last-child {
   padding: 1px; 
 }
+
+/*     
+
+    Main screen content initial display values, and positioning on screen
+
+*/
 
 nav.difficulty, nav.gameplay {
   display: none;
@@ -221,6 +274,12 @@ nav.difficulty, nav.gameplay {
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
+/*     
+
+    Win/Loss message sytlying and animation
+
+*/
 
 .win-loss-message {
   overflow: hidden;
@@ -241,16 +300,16 @@ nav.difficulty, nav.gameplay {
     typing 3.5s steps(40, end);
 }
 
-/* The typing effect */
 @keyframes typing {
   from { width: 0 }
   to { width: 100% }
 }
 
-.credits {
-  display: inline-block;
-  margin: 0;
-}
+/*     
+
+    Overide of Skeleton's default button styling
+
+*/
 
 button {
   color: #E3E3E3;
@@ -262,6 +321,17 @@ button:hover,
 button:focus {
   color: #393939;
   background-color: #E3E3E3;
+}
+
+/*     
+
+    Footer styling
+
+*/
+
+.credits {
+  display: inline-block;
+  margin: 0;
 }
 
 a.nav-link:link {
@@ -283,6 +353,12 @@ a.nav-link:active {
    color: #222;
    text-decoration: none;
 }
+
+/*     
+
+    Moblie responsive media query
+
+*/
 
 @media (max-width: 550px) {
   .title {
@@ -314,5 +390,56 @@ a.nav-link:active {
 
   .main-screen {
     height: 598px;
+  }
+}
+
+/*     
+
+    Large monitor responsive media query
+
+*/
+
+@media (min-width: 1500px) {
+  .title {
+    font-size: 6.5rem;
+  }
+
+  h2 {
+    font-size: 4rem;
+  }
+
+  h4 {
+    font-size: 2.8rem;
+  }
+
+  h5 {
+    font-size: 2rem;
+  }
+
+  .instructions-screen > p, .instructions-screen > p > span {
+    font-size: 1.8rem;
+  }
+
+  td {
+    height: 30px;
+    width: 30px;
+    line-height: 28px;
+    font-size: 28px;
+  }
+
+  .mine, .flagged {
+    background-size: 28px;
+  }
+
+  .main-screen {
+    height: 774px;
+  }
+
+  .button-section {
+    margin-top: 30px;
+  }
+
+  caption {
+    font-size: 14px;
   }
 }

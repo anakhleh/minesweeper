@@ -1,3 +1,4 @@
+$(function() {
 /*
 
   Global variables & classes
@@ -156,8 +157,8 @@ function generateGameboard(boardSize) {
   <table>
     <caption>
       <div class="table-caption-content">
-        <p class="mine-counter">Mines: 10</p>
-        <p class="timer">Time: 0</p>
+        <p class="mine-counter"></p>
+        <p class="timer"></p>
       </div>
     </caption>
     <tbody>`;
@@ -194,7 +195,7 @@ function init () {
 
   time = 0;
   runTimer = false;
-  $('.timer').html(`Time: ${time}`)
+  $('.timer').html(`00:00`)
   
   numFlagged = 0;
   winner = null;
@@ -209,7 +210,7 @@ function init () {
 /*          Render function called at any change in game state          */
 
 function render() {
-  startGame && $('.mine-counter').html(`Mines: ${numMines}`);
+  if (startGame) $('.mine-counter').html(`Mines: ${numMines}`);
   startGame = false;
   if (!gameOver) {
     $('.mine-counter').html(`Mines: ${numMines - numFlagged}`);
@@ -255,9 +256,17 @@ function resetGame() {
 /*          Starts and runs the game's timer following the start of each game (first click)         */
 
 function gameTimer () {
+  var min = '';
+  var seconds = '';
   if (runTimer) {
     time += 1;
-    $('.timer').html(`Time: ${time}`);
+    if (time >= 60) {
+      min = Math.floor(time / 60).toString();
+      seconds = (time % 60).toString();
+    } else {
+      seconds = time.toString();
+    }
+    $('.timer').html(`${"0".repeat(2 - min.length) + min}:${"0".repeat(2 - seconds.length) + seconds}`);
   }
 }
 
@@ -353,3 +362,5 @@ function calculateWinner() {
     });
   })
 }
+
+});
